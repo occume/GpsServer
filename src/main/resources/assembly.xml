@@ -14,22 +14,24 @@
 		</dependencySet>
 	</dependencySets>
 	<fileSets>
+	
 		<fileSet>
 			<outputDirectory>/</outputDirectory>
 			<includes>
 				<include>README.md</include>
 			</includes>
 		</fileSet>
+		
 		<fileSet>
 			<directory>src/main/scripts</directory>
 			<outputDirectory>/bin</outputDirectory>
 			<includes>
 				<include>start.bat</include>
 				<include>stop.bat</include>
+				<include>conf.bat</include>
 			</includes>
 		</fileSet>
 		
 	</fileSets>
-
 
 </assembly>

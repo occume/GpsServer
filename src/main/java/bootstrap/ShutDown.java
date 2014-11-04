@@ -1,5 +1,6 @@
 package bootstrap;
 
+import util.Conf;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -36,6 +37,7 @@ public class ShutDown {
 	            future.channel().close();
 	        }
 	    });
+		
 	}
 
 }
