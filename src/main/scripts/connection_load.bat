@@ -7,5 +7,5 @@ for %%j in ("..\lib_ext\*.jar") do set classpath=!classpath!;%%j
 endlocal & set classpath=%classpath%
 
 
-java util.Conf %1 %2
+java test.ConnectionTest %1 %2
 pause

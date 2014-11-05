@@ -22,12 +22,16 @@ public class Conf {
 	
 	private static Properties props = new Properties();
 	
+	private static String confName = "/conf/conf.properties";
+	
 	static{
 		props = new Properties();
 		try {
-			res = new ClassPathResource("/src/main/resource/conf.properties");
-			System.out.println(res.getFilename());
-			InputStream	ins = res.getInputStream();
+			
+			res = new ClassPathResource("/");
+			String parentPath = res.getFile().getParentFile().getPath();
+			String confPath = parentPath + confName;
+			InputStream	ins = new FileInputStream(new File(confPath));
 			props.load(ins);
 			System.out.println(props);
 		} catch (FileNotFoundException e) {
@@ -39,6 +43,16 @@ public class Conf {
 	
 	public static String getProperty(String key){
 		return props.getProperty(key);
+	}
+	
+	public static int getInt(String key){
+		int ret = 0;
+		try{
+			ret = Integer.valueOf(props.getProperty(key));
+		}catch(Exception e){
+			LOG.error("读取配置配置异常：" + key);
+		}
+		return ret;
 	}
 	
 	public static void main(String...strings){

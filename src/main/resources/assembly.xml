@@ -23,12 +23,21 @@
 		</fileSet>
 		
 		<fileSet>
+			<directory>src/main/resources</directory>
+			<outputDirectory>/conf</outputDirectory>
+			<includes>
+				<include>conf.properties</include>
+			</includes>
+		</fileSet>
+		
+		<fileSet>
 			<directory>src/main/scripts</directory>
 			<outputDirectory>/bin</outputDirectory>
 			<includes>
 				<include>start.bat</include>
 				<include>stop.bat</include>
-				<include>conf.bat</include>
+				<include>connection_load.bat</include>
+				<include>throughput_load.bat</include>
 			</includes>
 		</fileSet>
 		

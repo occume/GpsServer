@@ -17,6 +17,30 @@ public class GpsRequest {
 	private int		dir;
 	private String  time;
 	
+	public GpsRequest(int id){
+		this.id = id;
+	}
+	
+	public GpsRequest(int mark, int id, int len, String simId, int liushui,
+			int alert, int gpsStatu, int latitudeX, int latitudeY, int hight,
+			int speed, int dir, String time) {
+		this.mark = mark;
+		this.id = id;
+		this.len = len;
+		this.simId = simId;
+		this.liushui = liushui;
+		this.alert = alert;
+		this.gpsStatu = gpsStatu;
+		this.latitudeX = latitudeX;
+		this.latitudeY = latitudeY;
+		this.hight = hight;
+		this.speed = speed;
+		this.dir = dir;
+		this.time = time;
+	}
+	
+	public GpsRequest(){}
+	
 	public int getMark() {
 		return mark;
 	}
@@ -94,6 +118,15 @@ public class GpsRequest {
 	}
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+	@Override
+	public String toString() {
+		return "GpsRequest [mark=" + mark + ", id=" + id + ", len=" + len
+				+ ", simId=" + simId + ", liushui=" + liushui + ", alert="
+				+ alert + ", gpsStatu=" + gpsStatu + ", latitudeX=" + latitudeX
+				+ ", latitudeY=" + latitudeY + ", hight=" + hight + ", speed="
+				+ speed + ", dir=" + dir + ", time=" + time + "]";
 	}
 	
 	

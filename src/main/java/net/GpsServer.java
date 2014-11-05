@@ -13,11 +13,15 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import manage.EventLoopGroups;
 import net.NamedThreadFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import util.Conf;
+import util.Constants;
 
 @Component
 public class GpsServer{
@@ -28,6 +32,8 @@ public class GpsServer{
 	
 	private NioEventLoopGroup boss = new NioEventLoopGroup(2, new NamedThreadFactory("BOSS"));
 	private NioEventLoopGroup worker = new NioEventLoopGroup(2, new NamedThreadFactory("WORKER"));
+	
+	private static int SERVER_PROT = Conf.getInt(Constants.ConfKey.SERVER_PORT);
 	
 	public static final ChannelGroup ALL_CHANNELS = new DefaultChannelGroup("CHANNELS", GlobalEventExecutor.INSTANCE);
 	
@@ -46,10 +52,16 @@ public class GpsServer{
 			 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
              .childOption(ChannelOption.SO_KEEPALIVE, true);
 			
-			Channel serverChannel = b.bind(10086).sync().channel();
+			if(SERVER_PROT == 0)
+				SERVER_PROT = 8888;
+			Channel serverChannel = b.bind(SERVER_PROT).sync().channel();
 			ALL_CHANNELS.add(serverChannel);
 			
-			LOG.error("GpsServer start at " + new Date());
+			LOG.info("=============================================");
+			LOG.info("Server start succes!");
+			LOG.info("Start at: " + new Date());
+			LOG.info("Listen port: " + SERVER_PROT);
+			LOG.info("=============================================");
 		} catch (InterruptedException e) {
 			LOG.error("Server not start");
 		}
@@ -68,7 +80,7 @@ public class GpsServer{
 			
 			Channel serverChannel = b.bind(10087).sync().channel();
 			
-			LOG.error("Shut down port listen at " + new Date());
+			LOG.info("ShutDown port: 10087");
 		} catch (InterruptedException e) {
 			LOG.error("Server not start");
 		}
@@ -78,7 +90,11 @@ public class GpsServer{
 	public void stop() {
 		boss.shutdownGracefully();
 		worker.shutdownGracefully();
-		LOG.error("GpsServer stop at " + new Date());
+		EventLoopGroups.closeDefaultEventLoopGroup();
+		LOG.info("--------------------------------------------");
+		LOG.info("Server stop succes!");
+		LOG.info("Stop at: " + new Date());
+		LOG.info("--------------------------------------------");
 	}
 
 }
