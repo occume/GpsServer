@@ -16,8 +16,11 @@ public class ChannelInitor extends ChannelInitializer<SocketChannel> {
 		
 		World.instance().addChannel(ch);
 		
+		GpsHandler gpsHandler = (GpsHandler)World.getBean("gpsHandler");
+
 		ch.pipeline().addLast(new GpsDecoder());
-		ch.pipeline().addLast(EventLoopGroups.defaultEventLoopGroup(), new GpsHandler());
+		ch.pipeline().addLast(EventLoopGroups.defaultEventLoopGroup(), 
+				gpsHandler);
 	}
 	
 }

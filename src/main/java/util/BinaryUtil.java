@@ -31,6 +31,18 @@ public class BinaryUtil {
 	 * @return 
 	 */
 	public static String BinaryToHexString(byte[] bytes) {
+		return BinaryToHexString(bytes, " ");
+	}
+	/**
+	 * 
+	 * @param bytes
+	 * @return 
+	 */
+	public static String BinaryToHexString_(byte[] bytes) {
+		return BinaryToHexString(bytes, "_");
+	}
+	
+	private static String BinaryToHexString(byte[] bytes, String split) {
 
 		String result = "";
 		String hex = "";
@@ -39,10 +51,15 @@ public class BinaryUtil {
 			hex = String.valueOf(hexStr.charAt((bytes[i] & 0xF0) >> 4));
 			
 			hex += String.valueOf(hexStr.charAt(bytes[i] & 0x0F));
-			result += hex + " ";
+			if(i == bytes.length - 1)
+				result += hex;
+			else
+				result += hex + split;
 		}
 		return result;
 	}
+	
+	
 
 	/**
 	 * 

@@ -18,7 +18,7 @@ public class SendMessageTest {
 		String src2 = "7E0100002E014539610334009A000000003730333231444D383030322D333000000000000000000000003936313033333401D4C142303030303100D97E";
 		byte[] ret = HexStringToBinary(src1 + src2);
 		System.out.println(ret.length);
-		
+//		PropertyPlaceholderConfigurer
 		EventLoopGroup worker = new NioEventLoopGroup(1);
 		Bootstrap b = new Bootstrap();
 		b.group(worker)
@@ -32,8 +32,8 @@ public class SendMessageTest {
 			}
 		});
 		
-		Channel c = b.connect("112.124.115.136", 8888).sync().channel();
-//		Channel c = b.connect("127.0.0.1", 8888).sync().channel();
+//		Channel c = b.connect("112.124.115.136", 8888).sync().channel();
+		Channel c = b.connect("127.0.0.1", 8888).sync().channel();
 
 		for(int i = 0; i < 1; i++){
 				c.writeAndFlush(c.alloc().buffer().writeBytes(ret));

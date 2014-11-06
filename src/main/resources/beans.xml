@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans classpath:/org/springframework/beans/factory/xml/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context classpath:/org/springframework/context/config/spring-context-3.0.xsd
+			http://www.springframework.org/schema/jee classpath:spring-jee-3.0.xsd
+			http://www.springframework.org/schema/aop classpath:/org/springframework/aop/config/spring-aop-3.0.xsd
+			http://www.springframework.org/schema/task  classpath:spring-task-3.1.xsd  
+			http://www.springframework.org/schema/tx classpath:/org/springframework/transaction/config/spring-tx-3.0.xsd">
+
+	<context:annotation-config />
+	<task:annotation-driven/>
+	<context:component-scan base-package="net,mybatis,handler,manage" />
+	
+	<context:property-placeholder location="jdbc.properties" system-properties-mode="OVERRIDE" />
+<!-- 	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	 	<property name="driverClass" value="${jdbc.driverClassName}" />
+	 	<property name="initialPoolSize"><value>10</value></property>
+	 	<property name="maxPoolSize"><value>90</value></property>
+		<property name="minPoolSize"><value>10</value></property>
+		<property name="autoCommitOnClose"><value>true</value></property>
+		<property name="maxStatements"><value>50</value></property>
+		<property name="maxIdleTime" value="1800"/>
+		<property name="checkoutTimeout" value="90000"/>
+		<property name="idleConnectionTestPeriod"><value>600</value></property>
+		 	
+		<property name="jdbcUrl"><value>jdbc:mysql://d3gameserver.mysql.rds.aliyuncs.com:3306/d3_game</value></property>
+		<property name="user"><value>occume</value></property>
+		<property name="password"><value>5651403</value></property>
+		<property name="jdbcUrl"><value>jdbc:mysql://127.0.0.1/d3_game</value></property>
+		<property name="user"><value>root</value></property>
+		<property name="password"><value>5651403</value></property> 
+		
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	 </bean>
+ -->
+    <!-- transaction manager, use JtaTransactionManager for global tx -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- enable transaction demarcation with annotations -->
+    <tx:annotation-driven />
+
+     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage" value="mybatis.domain" />
+    </bean>
+	
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="mybatis.mapper.UserMapper" />
+	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
+</beans>

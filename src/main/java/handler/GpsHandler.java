@@ -2,10 +2,15 @@ package handler;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import manage.Sharding;
 import manage.World;
+import mybatis.domain.User;
+import mybatis.service.UserService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import codec.GpsDecoder;
@@ -16,6 +21,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 @Component
+@Scope("prototype")
 public class GpsHandler extends SimpleChannelInboundHandler<GpsRequest>{
 
 	private AtomicInteger count = new AtomicInteger();
@@ -23,6 +29,9 @@ public class GpsHandler extends SimpleChannelInboundHandler<GpsRequest>{
 	private Stopwatch sw;
 	
 	private Session session;
+	
+	@Autowired
+	UserService userService;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(GpsDecoder.class);
 	
@@ -43,7 +52,15 @@ public class GpsHandler extends SimpleChannelInboundHandler<GpsRequest>{
 		}
 		
 		if(msg.getId() == 258){
-			LOG.info("Hearbeat message, client: " + ctx.channel().remoteAddress());
+			LOG.info("Heatbeat message, client: " + ctx.channel().remoteAddress());
+		}
+		else{
+			if(!Sharding.instance().exist(msg.getSimId())){
+				LOG.info("create a new table: " + msg.getSimId());
+				userService.createTable(msg.getSimId());
+				Sharding.instance().put(msg.getSimId());
+			}
+			userService.addUser(new User(msg.getTime(), msg.getSimId()));
 		}
 		
 		LOG.info(msg.toString());
@@ -55,13 +72,17 @@ public class GpsHandler extends SimpleChannelInboundHandler<GpsRequest>{
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		ctx.close();
 		World.instance().removeChannel(ctx.channel());
 	}
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
 			throws Exception {
-//		LOG.error(cause.getMessage());
+//		cause.printStackTrace();
+		LOG.error(cause.getMessage());
+		ctx.close();
+		
 	}
 
 }

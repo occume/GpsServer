@@ -33,7 +33,7 @@ public class Conf {
 			String confPath = parentPath + confName;
 			InputStream	ins = new FileInputStream(new File(confPath));
 			props.load(ins);
-			System.out.println(props);
+			
 		} catch (FileNotFoundException e) {
 			LOG.error("配置文件不存在");
 		} catch (IOException e) {

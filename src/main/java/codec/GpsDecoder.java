@@ -45,8 +45,7 @@ public class GpsDecoder extends ByteToMessageDecoder{
 		
 		String strMsg = BinaryUtil.BinaryToHexString(msg);
 		LOG.info(strMsg);
-		// 7E 01 02 00 00 01 45 39 61 03 34 00 A1 89 7E 
-//		System.out.println(readable);
+		
 		int mark 		= buf.readByte();
 		int id 			= buf.readShort();
 		int len 		= buf.readShort();
@@ -63,8 +62,6 @@ public class GpsDecoder extends ByteToMessageDecoder{
 			return;
 		}
 		
-//		System.out.println(buf.readableBytes());
-//		System.out.println("len = " + len);
 		int bodyLen = len + 10;
 		if(buf.readableBytes() < bodyLen){
 			int currentIndex = buf.readerIndex();
@@ -77,6 +74,8 @@ public class GpsDecoder extends ByteToMessageDecoder{
 		 */
 		if(!verify(buf, len + 12)){
 			LOG.error("校验码错误, client ip: " + ctx.channel().remoteAddress());
+			byte[] discards = new byte[buf.readableBytes()];
+			buf.readBytes(discards);
 			return;
 		}
 		
@@ -99,9 +98,9 @@ public class GpsDecoder extends ByteToMessageDecoder{
 			time[i] 	= buf.readByte();
 		}
 		
-		GpsRequest request = new GpsRequest(mark, id, len, BinaryUtil.BinaryToHexString(phone), 
+		GpsRequest request = new GpsRequest(mark, id, len, BinaryUtil.BinaryToHexString_(phone), 
 				liushui, alert, gpsStatu, latitudeX, latitudeY, hight, speed, 
-				dir, BinaryUtil.BinaryToHexString(time));
+				dir, BinaryUtil.BinaryToHexString_(time));
 		
 		byte[] discards = new byte[len - 26];
 		buf.readBytes(discards);

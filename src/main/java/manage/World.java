@@ -1,14 +1,40 @@
 package manage;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
-public class World {
+@Component
+public class World implements ApplicationContextAware{
+	
+	public void setApplicationContext(ApplicationContext applicationContext)
+			throws BeansException {
+		World.applicationContext = applicationContext;
+	}
+
+	private static ApplicationContext applicationContext;
+	
+	public static Object getBean(String beanName){
+		if (null == beanName){
+			return null;
+		}
+		return applicationContext.getBean(beanName);
+	}
+	
+	@PostConstruct
+	public void onStart() {
+		
+	}
 	
 	private static World world = new World();
 	
@@ -29,7 +55,7 @@ public class World {
 	
 	public void removeChannel(Channel channel){
 		ALL_CLIENTS.remove(channel);
-//		LOG.info("A new connection disconnected, total connections: " + size());
+		LOG.info("A new connection disconnected, total connections: " + size());
 	}
 	
 	public int size(){
