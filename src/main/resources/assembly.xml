@@ -27,7 +27,6 @@
 			<outputDirectory>/conf</outputDirectory>
 			<includes>
 				<include>conf.properties</include>
-				<include>jdbc.properties</include>
 			</includes>
 		</fileSet>
 		

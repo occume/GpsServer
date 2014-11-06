@@ -10,6 +10,23 @@
   </properties>
   
   <build>
+  
+  	<resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+		        <directory>src/main/resources</directory>
+		         
+		        <excludes>
+		        	<exclude>conf.properties</exclude>
+		        </excludes>
+	        </resource>
+        </resources>
     <plugins>
     
       <plugin>
