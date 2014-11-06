@@ -2,6 +2,7 @@ package mybatis.service;
 
 import java.util.List;
 
+import mybatis.domain.TrackBean;
 import mybatis.domain.User;
 import mybatis.mapper.UserMapper;
 
@@ -43,5 +44,25 @@ public class UserService {
 			LOG.error(e.getMessage());
 		}
 	}
+	
+	public String getDeptById(int id){
+		String ret = null;
+		try{
+			ret = userMapper.getDeptById(id);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
 
+	@Transactional
+	public void addTrack(TrackBean track) {
+		try{
+			userMapper.addTrack(track);
+		}catch(Throwable e){
+			e.printStackTrace();
+			LOG.error(e.getMessage());
+		}
+	}
 }

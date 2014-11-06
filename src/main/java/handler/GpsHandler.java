@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import manage.Sharding;
 import manage.World;
+import mybatis.domain.TrackBean;
 import mybatis.domain.User;
 import mybatis.service.UserService;
 
@@ -57,10 +58,10 @@ public class GpsHandler extends SimpleChannelInboundHandler<GpsRequest>{
 		else{
 			if(!Sharding.instance().exist(msg.getSimId())){
 				LOG.info("create a new table: " + msg.getSimId());
-				userService.createTable(msg.getSimId());
+				userService.createTable("TB_" + msg.getSimId());
 				Sharding.instance().put(msg.getSimId());
 			}
-			userService.addUser(new User(msg.getTime(), msg.getSimId()));
+			userService.addTrack(new TrackBean(msg.getLatitudeX(), msg.getLatitudeY()));
 		}
 		
 		LOG.info(msg.toString());

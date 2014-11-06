@@ -33,7 +33,7 @@ public class SendMessageTest {
 		});
 		
 //		Channel c = b.connect("112.124.115.136", 8888).sync().channel();
-		Channel c = b.connect("127.0.0.1", 8888).sync().channel();
+		Channel c = b.connect("127.0.0.1", 8889).sync().channel();
 
 		for(int i = 0; i < 1; i++){
 				c.writeAndFlush(c.alloc().buffer().writeBytes(ret));

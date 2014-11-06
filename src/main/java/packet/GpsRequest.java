@@ -10,8 +10,8 @@ public class GpsRequest {
 	
 	private int		alert;
 	private int		gpsStatu;
-	private int		latitudeX;
-	private int		latitudeY;
+	private float	latitudeX;
+	private float	latitudeY;
 	private int		hight;
 	private int		speed;
 	private int		dir;
@@ -21,9 +21,10 @@ public class GpsRequest {
 		this.id = id;
 	}
 	
+	
 	public GpsRequest(int mark, int id, int len, String simId, int liushui,
-			int alert, int gpsStatu, int latitudeX, int latitudeY, int hight,
-			int speed, int dir, String time) {
+			int alert, int gpsStatu, float latitudeX, float latitudeY,
+			int hight, int speed, int dir, String time) {
 		this.mark = mark;
 		this.id = id;
 		this.len = len;
@@ -38,7 +39,8 @@ public class GpsRequest {
 		this.dir = dir;
 		this.time = time;
 	}
-	
+
+
 	public GpsRequest(){}
 	
 	public int getMark() {
@@ -83,18 +85,23 @@ public class GpsRequest {
 	public void setGpsStatu(int gpsStatu) {
 		this.gpsStatu = gpsStatu;
 	}
-	public int getLatitudeX() {
+	
+	public float getLatitudeX() {
 		return latitudeX;
 	}
-	public void setLatitudeX(int latitudeX) {
+
+	public void setLatitudeX(float latitudeX) {
 		this.latitudeX = latitudeX;
 	}
-	public int getLatitudeY() {
+
+	public float getLatitudeY() {
 		return latitudeY;
 	}
-	public void setLatitudeY(int latitudeY) {
+
+	public void setLatitudeY(float latitudeY) {
 		this.latitudeY = latitudeY;
 	}
+
 	public int getHight() {
 		return hight;
 	}

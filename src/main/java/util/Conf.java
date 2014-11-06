@@ -28,9 +28,12 @@ public class Conf {
 		props = new Properties();
 		try {
 			
-			res = new ClassPathResource("/");
+			res = new ClassPathResource("");
+			LOG.info("res path: " + res.getFile().getPath());
 			String parentPath = res.getFile().getParentFile().getPath();
 			String confPath = parentPath + confName;
+			LOG.info("parent path: " + parentPath);
+			
 			InputStream	ins = new FileInputStream(new File(confPath));
 			props.load(ins);
 			

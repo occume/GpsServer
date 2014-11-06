@@ -22,9 +22,22 @@
   </insert>
   
   <insert id="createTable" statementType="CALLABLE" parameterType="string">
-  	{call create_table(  
+  	{call CREATEPOSTABLE(  
        #{table_name, jdbcType=VARCHAR, mode=IN}
     )} 
+  </insert>
+  
+  <select id="getDeptById" parameterType="int" resultType="string">
+  	SELECT dname FROM dept WHERE deptno = #{id}
+  </select>
+  
+  <insert id="addTrack" parameterType="TrackBean">
+    INSERT INTO TRACKS_FOR_01_45_39_61_03_34
+      (DATETIME, LONGITUDE, LATITUDE, GPSSPEED, RECORERDSPEED,
+       ANGLE, ALARMFLAG, HEIGHT, STATUS, OIL, VOLTAGE, MILES)
+    VALUES
+      (#{dateTime}, #{longitude}, #{latitude}, #{gpsSpeed}, #{recorerdSpeed}, #{angle}
+      , #{alarmFlag}, #{height}, #{status}, #{oil}, #{voltage}, #{miles})
   </insert>
  
 </mapper>

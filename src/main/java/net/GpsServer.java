@@ -53,7 +53,7 @@ public class GpsServer{
              .childOption(ChannelOption.SO_KEEPALIVE, true);
 			
 			if(SERVER_PROT == 0)
-				SERVER_PROT = 8888;
+				SERVER_PROT = 8889;
 			Channel serverChannel = b.bind(SERVER_PROT).sync().channel();
 			ALL_CHANNELS.add(serverChannel);
 			

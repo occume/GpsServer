@@ -87,8 +87,8 @@ public class GpsDecoder extends ByteToMessageDecoder{
 		int liushui 	= buf.readShort();
 		int alert 		= buf.readInt();
 		int gpsStatu 	= buf.readInt();
-		int latitudeX 	= buf.readInt();
-		int latitudeY 	= buf.readInt();
+		float latitudeX	= buf.readFloat();
+		float latitudeY = buf.readFloat();
 		int hight 		= buf.readShort();
 		int speed 		= buf.readShort();
 		int dir 		= buf.readShort();
