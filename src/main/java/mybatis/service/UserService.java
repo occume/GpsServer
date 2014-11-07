@@ -55,6 +55,10 @@ public class UserService {
 		}
 		return ret;
 	}
+	
+	public List<String> getAllTrackTables(){
+		return userMapper.getAllTrackTables();
+	}
 
 	@Transactional
 	public void addTrack(TrackBean track) {

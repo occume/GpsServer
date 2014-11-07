@@ -2,6 +2,8 @@ package mybatis.domain;
 
 import java.util.Date;
 
+import packet.GpsRequest;
+
 public class TrackBean {
 	
 	private Date	dateTime;
@@ -21,6 +23,21 @@ public class TrackBean {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.dateTime = new Date();
+	}
+	
+	public TrackBean(GpsRequest request){
+		this.dateTime = request.getDateTime();
+		this.longitude = request.getLongitude();
+		this.latitude = request.getLatitude();
+		this.gpsSpeed = request.getGpsSpeed();
+		this.recorerdSpeed = request.getRecorerdSpeed();
+		this.angle = request.getAngle();
+		this.alarmFlag = request.getAlarmFlag();
+		this.height = request.getHeight();
+		this.status = request.getStatus();
+		this.oil = request.getOil();
+		this.voltage = request.getVoltage();
+		this.miles = request.getMiles();
 	}
 	
 	public TrackBean(Date dateTime, float longitude, float latitude,

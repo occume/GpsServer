@@ -19,4 +19,6 @@ public interface UserMapper {
   
   void addTrack(TrackBean track);
   
+  List<String> getAllTrackTables();
+  
 }

@@ -34,7 +34,7 @@ public class GpsHandler extends SimpleChannelInboundHandler<GpsRequest>{
 	@Autowired
 	UserService userService;
 	
-	private static final Logger LOG = LoggerFactory.getLogger(GpsDecoder.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GpsHandler.class);
 	
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
@@ -53,15 +53,16 @@ public class GpsHandler extends SimpleChannelInboundHandler<GpsRequest>{
 		}
 		
 		if(msg.getId() == 258){
-			LOG.info("Heatbeat message, client: " + ctx.channel().remoteAddress());
+			LOG.info("Heartbeat message, client: " + ctx.channel().remoteAddress());
 		}
 		else{
-			if(!Sharding.instance().exist(msg.getSimId())){
-				LOG.info("create a new table: " + msg.getSimId());
-				userService.createTable("TB_" + msg.getSimId());
-				Sharding.instance().put(msg.getSimId());
+			String simId = msg.getSimId();
+			if(!Sharding.instance().exist(simId)){
+				LOG.info("create a new table: " + simId);
+				userService.createTable(simId);
+				Sharding.instance().put(simId);
 			}
-			userService.addTrack(new TrackBean(msg.getLatitudeX(), msg.getLatitudeY()));
+			userService.addTrack(new TrackBean(msg));
 		}
 		
 		LOG.info(msg.toString());
@@ -80,9 +81,9 @@ public class GpsHandler extends SimpleChannelInboundHandler<GpsRequest>{
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
 			throws Exception {
-//		cause.printStackTrace();
+		cause.printStackTrace();
 		LOG.error(cause.getMessage());
-		ctx.close();
+//		ctx.close();
 		
 	}
 

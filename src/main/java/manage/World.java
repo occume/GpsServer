@@ -1,10 +1,15 @@
 package manage;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
+
+import mybatis.service.UserService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -33,10 +38,15 @@ public class World implements ApplicationContextAware{
 	
 	@PostConstruct
 	public void onStart() {
-		
+		List<String> tracks = userService.getAllTrackTables();
+		LOG.info(tracks.toString());
+		Sharding.instance().initTables(tracks);
 	}
 	
 	private static World world = new World();
+	
+	@Autowired
+	private UserService userService;
 	
 	private final ChannelGroup ALL_CLIENTS = new DefaultChannelGroup("CHANNELS", GlobalEventExecutor.INSTANCE);
 	

@@ -1,5 +1,7 @@
 package util;
 
+import io.netty.buffer.ByteBuf;
+
 public class BinaryUtil {
 	
 	private static String hexStr = "0123456789ABCDEF";
@@ -52,6 +54,29 @@ public class BinaryUtil {
 			
 			hex += String.valueOf(hexStr.charAt(bytes[i] & 0x0F));
 			if(i == bytes.length - 1)
+				result += hex;
+			else
+				result += hex + split;
+		}
+		return result;
+	}
+	
+	public static String ByteBufToHexString(ByteBuf buf){
+		return ByteBufToHexString(buf, " ");
+	}
+	
+	private static String ByteBufToHexString(ByteBuf buf, String split) {
+
+		String result = "";
+		String hex = "";
+		int end = buf.writerIndex();
+		int start = buf.readerIndex();
+		for (int i = start; i < end; i++) {
+			
+			hex = String.valueOf(hexStr.charAt((buf.getByte(i) & 0xF0) >> 4));
+			
+			hex += String.valueOf(hexStr.charAt(buf.getByte(i) & 0x0F));
+			if(i == buf.writableBytes() - 1)
 				result += hex;
 			else
 				result += hex + split;

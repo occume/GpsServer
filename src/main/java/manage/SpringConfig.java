@@ -26,14 +26,14 @@ public class SpringConfig{
 		String password = Conf.getProperty("jdbc.password");
 		
 		if(driver == null){
-//			driver = "org.gjt.mm.mysql.Driver";
-//			url = "jdbc:mysql://d3gameserver.mysql.rds.aliyuncs.com:3306/d3_game";
-//			name = "occume";
-//			password = "5651403";
-			driver = "oracle.jdbc.driver.OracleDriver";
-			url = "jdbc:oracle:thin:@localhost:1521:orcl";
-			name = "scott";
+			driver = "org.gjt.mm.mysql.Driver";
+			url = "jdbc:mysql://d3gameserver.mysql.rds.aliyuncs.com:3306/d3_game";
+			name = "occume";
 			password = "5651403";
+//			driver = "oracle.jdbc.driver.OracleDriver";
+//			url = "jdbc:oracle:thin:@localhost:1521:orcl";
+//			name = "scott";
+//			password = "5651403";
 		}
 		
 		LOG.info("driver: " + driver);

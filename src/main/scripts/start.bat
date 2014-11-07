@@ -7,6 +7,6 @@ for %%j in ("..\lib_ext\*.jar") do set classpath=!classpath!;%%j
 @REM launch echo %classpath%
 endlocal & set classpath=%classpath%
 
-start javaw -Xms1024m -Xmx1024m bootstrap.Launcher start %1 %2
+start javaw -Xms512m -Xmx1024m bootstrap.Launcher start %1 %2
 echo Æô¶¯³É¹¦£¡
 pause
