@@ -15,7 +15,7 @@ public class LoadTest {
 	
 	public static void main(String...strings){
 	
-		for(int i = 0; i < 500; i++){
+		for(int i = 0; i < 1000; i++){
 			new Thread(new Runnable() {
 				public void run() {
 					try {
